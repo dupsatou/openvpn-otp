@@ -2,7 +2,10 @@ OpenVPN OTP Authentication support
 ==================================
 
 This version was forked and modified for use in VyOS.  Specifically the location of the 
-otp-secrets file has been changed to conform to VyOS standards.
+otp-secrets file has been changed to conform to VyOS standards.  The configure script
+has also been modified to work with autoconf 2.67 used in Debian Squeeze which is part
+of the base for VyOS to date.  For now this is a manual setup and install but I will
+look into trying to get this added into VyOS as part of its base.
 
 This plug-in adds support for OTP time based tokens for OpenVPN.
 Compatible with Google Authenticator software token, other software and hardware based OTP time tokens.
@@ -15,18 +18,19 @@ To bootstrap autotools (generate configure and Makefiles):
 
 Build and install with:
 
-    ./configure --prefix=/usr
-    make install
+    ./configure 
+    make
 
-The default install location (PREFIX/LIB/openvpn) can be changed by
-passing the directory with --with-openvpn-plugin-dir to ./configure:
+Once the make is complete the compiled libraries are in src/.libs/
 
-    ./configure --with-openvpn-plugin-dir=/plugin/dir
+    openvpn-otp.la
+    openvpn-otp.so
 
-Add the following lines to your server config:
+Copy these compiled libraries to your Vyatta system in /usr/lib/openvpn.
 
-    # use otp passwords
-    plugin /usr/lib64/openvpn/plugins/openvpn-otp.so
+You will need to add the following to your VyOS config:
+
+   set interface openvpn vtunNN openvpn-option "--plugin /usr/lib/openvpn/openvpn-otp.so"
 
 Add the following lines to your clients' configs:
 
@@ -40,6 +44,10 @@ to both client and server configs:
 
     # disable username/password renegotiation
     reneg-sec 0
+
+To add it to the server, do the following in VyOS:
+
+    set interface openvpn vtunNN openvpn-option "--reneg-sec 0"
 
 At this moment the plugin does not support any configuration. You will have to recompile it if you want any changes to the otp parameters. There is a special case for 60 second hardware time tokens, see configuration below.
 The secret file should be placed at /config/openvpn/otp-secrets and set file permissions to 0600. Default OTP parameters are:
@@ -81,7 +89,9 @@ Troubleshooting
 Make sure that time is in sync on the server and on your phone/tablet/other OTP client device.
 You may use oathtool for token verification on your OpenVPN server:
 
-    $ oathtool -b K7BYLIU5D2V33X6S
+To test the key for the user bob for example, use the following:
+
+    $ oathtool --totp -b K7BYLIU5D2V33X6S
     995277
 
 The tokens should be identical on your OTP client and OpenVPN server.
@@ -94,4 +104,4 @@ Also, check that /etc/ppp/otp-secrets file:
 
 Inspired by ppp-otp plugin written by GitHub user kolbyjack
 This plugin written by Evgeny Gridasov (evgeny.gridasov@gmail.com)
-Forked by GitHub user dupsatou -  Brian Hart (brian@hartnet.us)
+Forked for VyOS by GitHub user dupsatou -  Brian Hart (brian@hartnet.us)
