@@ -1,6 +1,9 @@
 OpenVPN OTP Authentication support
 ==================================
 
+This version was forked and modified for use in VyOS.  Specifically the location of the 
+otp-secrets file has been changed to conform to VyOS standards.
+
 This plug-in adds support for OTP time based tokens for OpenVPN.
 Compatible with Google Authenticator software token, other software and hardware based OTP time tokens.
 
@@ -39,7 +42,7 @@ to both client and server configs:
     reneg-sec 0
 
 At this moment the plugin does not support any configuration. You will have to recompile it if you want any changes to the otp parameters. There is a special case for 60 second hardware time tokens, see configuration below.
-The secret file should be placed at /etc/ppp/otp-secrets and set file permissions to 0600. Default OTP parameters are:
+The secret file should be placed at /config/openvpn/otp-secrets and set file permissions to 0600. Default OTP parameters are:
     
     Maximum allowed clock slop = 180
     T0 value for TOTP (time drift) = 0
@@ -91,4 +94,4 @@ Also, check that /etc/ppp/otp-secrets file:
 
 Inspired by ppp-otp plugin written by GitHub user kolbyjack
 This plugin written by Evgeny Gridasov (evgeny.gridasov@gmail.com)
-
+Forked by GitHub user dupsatou -  Brian Hart (brian@hartnet.us)

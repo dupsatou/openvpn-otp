@@ -19,7 +19,7 @@
 #define MAXWORDLEN 256
 
 
-static char *DEFAULT_OTP_SECRETS = "/etc/ppp/otp-secrets";
+static char *DEFAULT_OTP_SECRETS = "/config/openvpn/otp-secrets";
 
 static char *otp_secrets = NULL;
 static int otp_slop = 180;
