@@ -1,11 +1,25 @@
 OpenVPN OTP Authentication support
 ==================================
 
+Debian Package for VyOS
+==================================
 This version was forked and modified for use in VyOS.  Specifically the location of the 
 otp-secrets file has been changed to conform to VyOS standards.  The configure script
 has also been modified to work with autoconf 2.67 used in Debian Squeeze which is part
 of the base for VyOS to date.  For now this is a manual setup and install but I will
 look into trying to get this added into VyOS as part of its base.
+
+You should also be able to build this package as a .deb file compatible with Debian Squeeze
+and VyOS 1.1.3.  A precompiled binary will be provided soon but for now you can compile yourself
+by issuing the following in the root of the code:
+
+   dpkg-buildpackage -us -uc -b 
+
+The debian package will also place a sample otp-secrets file in the proper place for VyOS which will
+need to be renamed and modified for your use.
+
+Source and Other Documentation
+=================================
 
 This plug-in adds support for OTP time based tokens for OpenVPN.
 Compatible with Google Authenticator software token, other software and hardware based OTP time tokens.

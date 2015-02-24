@@ -1,0 +1,15 @@
+Source: openvpn-otp
+Section: unknown
+Priority: extra
+Maintainer: Brian Hart <brian@hartnet.us>
+Build-Depends: debhelper (>= 7.0.50~), libssl-dev, openvpn, mime-support, libmagic1, file, mawk
+Standards-Version: 3.8.4
+Homepage: https://github.com/dupsatou/openvpn-otp
+#Vcs-Git: git://git.debian.org/collab-maint/openvpn-otp.git
+#Vcs-Browser: http://git.debian.org/?p=collab-maint/openvpn-otp.git;a=summary
+
+Package: openvpn-otp
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: OpenVPN One Time Password Module
+ This module provides OpenVPN with a built in ability to do One Time Passwords compatible with the Google Authenticator.  This module is intended to be a stand alone module and not used with PAM or any other authentication backends.
